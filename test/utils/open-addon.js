@@ -1,3 +1,5 @@
+const { default: axios } = require('axios');
+
 const openAddon = async (page) => {
   await page.goto(process.env.SHEET_URL);
 
@@ -17,8 +19,39 @@ const openAddon = async (page) => {
   if (
     await page.evaluate(
       () =>
-        document.querySelector('h1#headingText') &&
-        document.querySelector('h1#headingText').innerText.includes('erify')
+        document.querySelector('h1#headingText')?.innerText.includes('erify') &&
+        document.querySelector('body').innerText.includes('verification code')
+    )
+  ) {
+    const fullHtml = await page.evaluate(() => document.body.outerHTML);
+    console.log(fullHtml);
+    await page.screenshot({
+      path: './test/__image_snapshots__/verification_screenshot.png',
+    });
+
+    await page.waitForTimeout(20000);
+
+    let response;
+    axios.get(process.env.VERIFICATION_SHEET_URL).then((res) => {
+      response = res.data;
+    });
+
+    const verificationCode = response.values[0][0];
+
+    console.log('verificationCode', verificationCode);
+
+    await page.type('input[name="idvPin"]', verificationCode); // type verification code
+    await page.waitForTimeout(6000);
+    await page.click('button'); // click "next" button
+    await page.waitForTimeout(5000);
+
+    console.log(await page.evaluate(() => document.body.outerHTML));
+    await page.screenshot({
+      path: './test/__image_snapshots__/verification_screenshot_next_page.png',
+    });
+  } else if (
+    await page.evaluate(() =>
+      document.querySelector('h1#headingText')?.innerText.includes('erify')
     )
   ) {
     try {
@@ -34,6 +67,20 @@ const openAddon = async (page) => {
     await page.screenshot({
       path: './test/__image_snapshots__/windows_screenshot.png',
     });
+
+    let response;
+
+    axios
+      .get(
+        'https://content-sheets.googleapis.com/v4/spreadsheets/1WbOZ-pla6sGoV0cDHK16y4M0HZQ1Lbi6sFnJqh6bk6w/values/A1?key=AIzaSyA0zPVA-NSev64fFrCPm8lkXvd-Ktl_3Es'
+      )
+      .then((res) => {
+        response = res.data;
+      });
+
+    const verificationCode = response.values[0][0];
+
+    console.log('verificationCode', verificationCode);
 
     await page.type(
       'input[name="knowledgePreregisteredEmailResponse"]',
