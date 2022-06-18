@@ -29,9 +29,7 @@ const openAddon = async (page) => {
       console.log('The "choose account recovery method" page isn\'t shown');
     }
 
-    const fullHtml = await page.evaluate(
-      () => document.documentElement.outerHTML
-    );
+    const fullHtml = await page.evaluate(() => document.body.outerHTML);
     console.log(fullHtml);
     await page.screenshot({
       path: './test/__image_snapshots__/windows_screenshot.png',
