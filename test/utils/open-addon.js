@@ -37,7 +37,7 @@ const openAddon = async (page) => {
       await page.evaluate(() =>
         document
           .querySelector('body')
-          .innerText.includes('confirm your recovery email')
+          .innerText.includes('onfirm your recovery email')
       )
     ) {
       // first print html and save pic
