@@ -1,4 +1,4 @@
-const openAddon = async page => {
+const openAddon = async (page) => {
   await page.goto(process.env.SHEET_URL);
 
   await page.click('a:nth-child(2)'); // click on signin button
@@ -28,6 +28,14 @@ const openAddon = async page => {
       // eslint-disable-next-line no-console
       console.log('The "choose account recovery method" page isn\'t shown');
     }
+
+    const fullHtml = await page.evaluate(
+      () => document.documentElement.outerHTML
+    );
+    console.log(fullHtml);
+    await page.screenshot({
+      path: './test/__image_snapshots__/windows_screenshot.png',
+    });
 
     await page.type(
       'input[name="knowledgePreregisteredEmailResponse"]',
