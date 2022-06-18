@@ -19,7 +19,8 @@ const openAddon = async (page) => {
   if (
     await page.evaluate(
       () =>
-        document.querySelector('h1#headingText')?.innerText.includes('erify') &&
+        document.querySelector('h1#headingText') &&
+        document.querySelector('h1#headingText').innerText.includes('erify') &&
         document.querySelector('body').innerText.includes('verification code')
     )
   ) {
