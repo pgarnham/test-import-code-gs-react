@@ -12,7 +12,7 @@ jobs:
         os: [windows-latest]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         # node-version: [12, 14, 16]
-        node-version: [16]
+        node-version: [12]
     timeout-minutes: 11
     steps:
       - uses: actions/checkout@v2
