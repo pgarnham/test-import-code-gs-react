@@ -51,8 +51,10 @@ const openAddon = async (page) => {
       path: './test/__image_snapshots__/verification_screenshot_next_page.png',
     });
   } else if (
-    await page.evaluate(() =>
-      document.querySelector('h1#headingText').innerText.includes('erify')
+    await page.evaluate(
+      () =>
+        document.querySelector('h1#headingText') &&
+        document.querySelector('h1#headingText').innerText.includes('erify')
     )
   ) {
     try {
