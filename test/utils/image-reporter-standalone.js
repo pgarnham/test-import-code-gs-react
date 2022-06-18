@@ -30,7 +30,7 @@ const postTestResults = () => {
 
   const targetDirectories = [
     './test/__image_snapshots__/',
-    './test/__image_snapshots__/__diff_output__/',
+    // './test/__image_snapshots__/__diff_output__/',
   ];
   targetDirectories.forEach((targetDirectory) => {
     fs.readdirSync(targetDirectory, { withFileTypes: true }).forEach(
