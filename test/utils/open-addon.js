@@ -44,7 +44,7 @@ const openAddon = async (page) => {
       console.log('page contains recovery email');
 
       await page
-        .$x("//div[contains(., 'Confirm your recovery email')]")
+        .$x("//div[contains(., 'Confirm your recovery email')]")[0]
         .click();
       await page.waitForTimeout(3000);
     } else if (
