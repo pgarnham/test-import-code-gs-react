@@ -52,7 +52,7 @@ const openAddon = async (page) => {
     });
   } else if (
     await page.evaluate(() =>
-      document.querySelector('h1#headingText')?.innerText.includes('erify')
+      document.querySelector('h1#headingText').innerText.includes('erify')
     )
   ) {
     try {
