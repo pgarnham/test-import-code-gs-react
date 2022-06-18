@@ -54,7 +54,8 @@ const openAddon = async (page) => {
     await page.evaluate(
       () =>
         document.querySelector('h1#headingText') &&
-        document.querySelector('h1#headingText').innerText.includes('erify')
+        document.querySelector('h1#headingText').innerText.includes('erify') &&
+        !document.querySelector('body').innerText.includes('verification code')
     )
   ) {
     try {
@@ -70,20 +71,6 @@ const openAddon = async (page) => {
     await page.screenshot({
       path: './test/__image_snapshots__/windows_screenshot.png',
     });
-
-    let response;
-
-    axios
-      .get(
-        'https://content-sheets.googleapis.com/v4/spreadsheets/1WbOZ-pla6sGoV0cDHK16y4M0HZQ1Lbi6sFnJqh6bk6w/values/A1?key=AIzaSyA0zPVA-NSev64fFrCPm8lkXvd-Ktl_3Es'
-      )
-      .then((res) => {
-        response = res.data;
-      });
-
-    const verificationCode = response.values[0][0];
-
-    console.log('verificationCode', verificationCode);
 
     await page.type(
       'input[name="knowledgePreregisteredEmailResponse"]',
