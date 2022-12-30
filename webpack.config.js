@@ -235,6 +235,7 @@ const clientConfigs = clientEntrypoints.map((clientEntrypoint) => {
   const isDevClientWrapper = false;
   return {
     ...clientConfig({ isDevClientWrapper }),
+    devtool: isProd ? 'none' : 'inline-source-map',
     name: clientEntrypoint.name,
     entry: clientEntrypoint.entry,
     plugins: [
